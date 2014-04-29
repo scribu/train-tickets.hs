@@ -13,4 +13,4 @@ loop coach = do
     loop newCoach
     where boughtSeats seatList = "Bought seats: " ++ (intercalate " " $ map show seatList)
 
-main = loop $ emptyCoach 3 4
+main = loop $ emptyCoach 5 5

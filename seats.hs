@@ -22,10 +22,18 @@ showCompartment seats = intercalate "\n" $ map showSeat seats
 showCoach :: Coach -> [Char]
 showCoach coach = intercalate "\n----\n" $ map showCompartment $ compartments coach
 
-allEmptySeats coach = foldr (\(nr, occupied) acc -> if occupied then acc else nr:acc)
-    [] (seats coach)
+emptySeats :: [(Int, Bool)] -> [Int]
+emptySeats seats = foldr (\(nr, occupied) acc -> if occupied then acc else nr:acc)
+    [] seats
 
-findEmptySeats coach seatsToBuy = take seatsToBuy $ allEmptySeats coach
+findEmptyCompartment coach seatsToBuy = find emptyCompartment $ compartments coach
+    where emptyCompartment compartment = seatsToBuy <= length (emptySeats compartment)
+
+findEmptySeats coach seatsToBuy =
+    case attemptedFill of (Just compartment) -> seatList compartment
+                          Nothing            -> seatList (seats coach)
+    where attemptedFill = findEmptyCompartment coach seatsToBuy
+          seatList seats = take seatsToBuy $ emptySeats seats
 
 occupySeats seatsToMark (Coach seats seatsPerComp) = Coach (map matchSeat seats) seatsPerComp
     where matchSeat (nr, True) = (nr, True)
