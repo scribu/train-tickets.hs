@@ -13,19 +13,20 @@ data Coach = Coach { seats :: [(Int, Bool)], seatsPerComp :: Int } deriving (Sho
 emptyCoach :: Int -> Int -> Coach
 emptyCoach numComp seatsPerComp = Coach [(i, False) | i <- [1..numComp*seatsPerComp]] seatsPerComp
 
+compartments (Coach seats seatsPerComp) = chunksOf seatsPerComp seats
+
 showSeat (nr, occupied) = printf "%02d %s" nr (if occupied then "Y" else "N")
 
 showCompartment seats = intercalate "\n" $ map showSeat seats
 
 showCoach :: Coach -> [Char]
-showCoach (Coach seats seatsPerComp) = intercalate "\n----\n" $ map showCompartment $
-    chunksOf seatsPerComp seats
+showCoach coach = intercalate "\n----\n" $ map showCompartment $ compartments coach
 
-allEmptySeats seats = foldr isEmpty [] seats
+allEmptySeats coach = foldr isEmpty [] (seats coach)
     where isEmpty (_, True) acc = acc
           isEmpty (nr, False) acc = nr:acc
 
-findEmptySeats (Coach seats seatsPerComp) seatsToBuy = take seatsToBuy $ allEmptySeats seats
+findEmptySeats coach seatsToBuy = take seatsToBuy $ allEmptySeats coach
 
 occupySeats seatsToMark (Coach seats seatsPerComp) = Coach (map matchSeat seats) seatsPerComp
     where matchSeat (nr, True) = (nr, True)
