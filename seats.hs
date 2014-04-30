@@ -45,13 +45,13 @@ findEmptySeats coach seatsToBuy =
     where attemptedFill = findEmptyCompartment coach seatsToBuy
           seatList seats = take seatsToBuy $ emptySeats seats
 
-occupySeats :: [SeatNr] -> Coach -> Coach
-occupySeats seatsToMark (Coach seats seatsPerComp) = Coach (map matchSeat seats) seatsPerComp
+occupySeats :: Coach -> [SeatNr] -> Coach
+occupySeats (Coach seats seatsPerComp) seatsToMark = Coach (map matchSeat seats) seatsPerComp
     where matchSeat (nr, True) = (nr, True)
           matchSeat (nr, False) = (nr, elem nr seatsToMark)
 
 purchaseSeats :: Coach -> Int -> (Coach, Maybe [SeatNr])
 purchaseSeats coach seatsToBuy = if (length foundSeats) < seatsToBuy
     then (coach, Nothing)
-    else (occupySeats foundSeats coach, Just foundSeats)
+    else (coach `occupySeats` foundSeats, Just foundSeats)
     where foundSeats = findEmptySeats coach seatsToBuy
