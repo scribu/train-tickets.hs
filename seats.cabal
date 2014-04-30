@@ -1,0 +1,22 @@
+name:           seats
+version:        0.0.0
+build-type:     Simple
+cabal-version:  >= 1.18
+
+Library
+  default-language:     Haskell2010
+  ghc-options:          -Wall
+  hs-source-dirs:       .
+  build-depends:        base
+                      , split >= 0.2
+  exposed-modules:      Seats
+
+test-suite spec
+  type:                 exitcode-stdio-1.0
+  default-language:     Haskell2010
+  hs-source-dirs:       test
+  ghc-options:          -Wall
+  main-is:              Spec.hs
+  build-depends:        base
+                      , hspec >= 1.9
+                      , seats

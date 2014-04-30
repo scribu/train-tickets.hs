@@ -1,3 +1,1 @@
 language: haskell
-install: cabal install hspec split
-script: runhaskell Spec.hs
