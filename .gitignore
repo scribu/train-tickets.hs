@@ -1,5 +1,1 @@
-*.hi
-*.o
-/main
-/test
 dist/
