@@ -13,3 +13,7 @@ main = hspec $ do
 
         it "groups seats in a single compartment" $ do
             emptyCoach 3 4 `occupySeats` [1..3] `findEmptySeats` 4 `shouldBe` [5..8]
+
+        it "groups seats in as few compartments as possible" $ do
+            emptyCoach 3 4 `occupySeats` [1..3] `occupySeats` [5..7] `findEmptySeats` 5
+            `shouldBe` [9..12] ++ [4]
