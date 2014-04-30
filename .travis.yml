@@ -1,0 +1,3 @@
+language: haskell
+install: cabal install hspec
+script: runhaskell Spec.hs
