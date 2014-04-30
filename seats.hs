@@ -1,5 +1,7 @@
 module Seats
 ( emptyCoach
+, findEmptySeats
+, occupySeats
 , purchaseSeats
 , showCoach
 , Coach

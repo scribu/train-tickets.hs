@@ -7,11 +7,11 @@ A person buying multiple seats (for their family, or for a group of friends etc.
 ### Running interactively
 
 ```
-ghc main.hs && ./main
+runhaskell Console.hs
 ```
 
 ### Running tests
 
 ```
-ghc test.hs && ./test
+runhaskell Spec.hs
 ```
