@@ -58,7 +58,7 @@ findEmptySeats coach seatsToBuy =
     in foundSeats ++ take (sum notBought) ((emptySeats $ seats coach) \\ foundSeats)
 
 occupySeats :: Coach -> [SeatNr] -> Coach
-occupySeats (Coach seats compSize) seatsToMark = Coach (map matchSeat seats) compSize
+occupySeats coach seatsToMark = coach {seats=map matchSeat $ seats coach}
     where matchSeat (nr, True) = (nr, True)
           matchSeat (nr, False) = (nr, elem nr seatsToMark)
 
